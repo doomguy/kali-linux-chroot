@@ -1,4 +1,4 @@
-# kali-chroot
+# kali-linux-chroot
 If you don't want to run a full blown Kali VM and just want to have a shell with all the tools available.
 
 ## Installation
