@@ -1,5 +1,12 @@
 #!/bin/bash
-# Kali Linux chroot script by DOOMGUY [github.com/doomguy]
+# Remember to use: https://www.shellcheck.net
+set -euo pipefail
+IFS=$'\n\t'
+
+# Uncomment for Debugging
+#set -x
+
+# Kali Linux chroot script by Doomguy [github.com/doomguy]
 
 # make sure only root can run our script
 if [ "$(id -u)" != "0" ]; then
@@ -29,12 +36,12 @@ if [ ! -x $mnt_path ]; then
 fi
 
 # mount stuff
-if [ $1 = "start" ]; then
+if [ "$1" = "start" ]; then
 
   echo "Starting Kali chroot.."
   [ -z "$(mount | grep $mnt_path | grep ^/dev/loop)" ] && /bin/vmware-mount $kali_vmdk 1 $mnt_path
   [ -z "$(mount | grep $mnt_path/proc)" ] && /bin/mount -t proc proc $mnt_path/proc/
-  [ -z "$(mount | grep $mnt_path/sys) " ] && /bin/mount -t sysfs sys $mnt_path/sys/
+  [ -z "$(mount | grep $mnt_path/sys)" ] && /bin/mount -t sysfs sys $mnt_path/sys/
   [ -z "$(mount | grep $mnt_path/dev)" ] && /bin/mount -o bind /dev $mnt_path/dev/
 
   # change to new root
@@ -43,7 +50,7 @@ if [ $1 = "start" ]; then
 fi
 
 # umount stuff
-if [ $1 = "stop" ]; then
+if [ "$1" = "stop" ]; then
  
   echo "Stopping Kali chroot.."
   /bin/umount $mnt_path/proc/
